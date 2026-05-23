@@ -1,0 +1,1012 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Escalas de medida — Estadística · Area Loura</title>
+<meta name="description" content="Escalas de medida en estadística: actividades interactivas para entender la diferencia entre nominal, ordinal, intervalo y razón.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  :root {
+    --color: #06b6a4;
+    --color-soft: #e6faf7;
+    --color-dark: #0e7c70;
+    --c-nominal: #ef4444;
+    --c-ordinal: #f97316;
+    --c-intervalo: #06b6a4;
+    --c-razon: #a855f7;
+    --ink: #1f2937;
+    --muted: #6b7280;
+    --border: #e5e7eb;
+    --gray-bg: #f9fafb;
+  }
+  html, body {
+    background: #fff; color: var(--ink);
+    font-family: 'Nunito', sans-serif; font-size: 16px; line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+  }
+  .wrap { max-width: 1200px; margin: 0 auto; padding: 0 32px; }
+  .narrow { max-width: 860px; margin: 0 auto; padding: 0 32px; }
+
+  /* HEADER */
+  header.site { padding: 24px 0; border-bottom: 1px solid var(--border); }
+  .header-inner { display: flex; align-items: center; justify-content: space-between; gap: 24px; flex-wrap: wrap; }
+  .brand { display: flex; align-items: center; gap: 14px; text-decoration: none; }
+  .brand img { width: 52px; height: 52px; object-fit: contain; flex-shrink: 0; }
+  .brand h1 { font-size: 19px; font-weight: 800; color: var(--ink); line-height: 1.2; }
+  .brand p { font-size: 14px; color: var(--muted); font-weight: 600; margin-top: 2px; }
+  nav.top { display: flex; gap: 8px; }
+  nav.top a {
+    text-decoration: none; color: var(--ink); font-weight: 700; font-size: 15px;
+    padding: 10px 18px; border-radius: 999px; transition: background-color 0.15s ease;
+  }
+  nav.top a:hover { background: #f3f4f6; }
+
+  /* BREADCRUMB */
+  .crumbs { padding: 22px 0 0; }
+  .crumbs a {
+    color: var(--muted); font-weight: 700; font-size: 14px; text-decoration: none;
+    display: inline-flex; align-items: center; gap: 6px;
+  }
+  .crumbs a:hover { color: var(--color); }
+
+  /* HERO */
+  .hero-resource { padding: 24px 0 40px; }
+  .hero-pill {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: var(--color); color: #fff; padding: 8px 18px;
+    border-radius: 999px; font-size: 13px; font-weight: 800;
+    text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 22px;
+  }
+  .hero-resource h1.title {
+    font-size: 48px; font-weight: 900; letter-spacing: -1px;
+    line-height: 1.1; margin-bottom: 18px; color: var(--ink);
+  }
+  .hero-resource .lead {
+    font-size: 19px; color: var(--muted); font-weight: 600; max-width: 720px;
+  }
+  .hero-resource .icon-big {
+    font-size: 80px; line-height: 1; display: inline-block; margin-bottom: 14px;
+    filter: drop-shadow(0 4px 8px rgba(6,182,164,0.18));
+  }
+
+  /* SECCIONES */
+  section.block { padding: 48px 0; border-top: 1px solid var(--border); }
+  section.block:first-of-type { border-top: none; }
+  .section-head { display: flex; align-items: center; gap: 14px; margin-bottom: 22px; }
+  .section-head .badge {
+    width: 44px; height: 44px; border-radius: 12px;
+    background: var(--color); color: #fff; display: flex;
+    align-items: center; justify-content: center; font-size: 22px; flex-shrink: 0;
+  }
+  .section-head h2 {
+    font-size: 26px; font-weight: 800; color: var(--ink); letter-spacing: -0.3px;
+  }
+  .section-intro {
+    font-size: 17px; color: var(--muted); font-weight: 600; margin-bottom: 24px;
+    max-width: 720px;
+  }
+
+  /* ====== APERTURA: PROVOCACIÓN ====== */
+  .opener {
+    background: linear-gradient(135deg, #e6faf7 0%, #f9fafb 100%);
+    border-radius: 22px; padding: 36px;
+    border-left: 5px solid var(--color);
+  }
+  .opener .question {
+    font-size: 22px; font-weight: 800; color: var(--ink); line-height: 1.35;
+    margin-bottom: 8px;
+  }
+  .opener .answer-hint {
+    font-size: 16px; color: var(--muted); font-weight: 600;
+  }
+
+  /* ====== CLASIFICADOR ====== */
+  .classifier {
+    background: var(--gray-bg); border-radius: 22px; padding: 32px;
+  }
+  .classifier-step { display: none; }
+  .classifier-step.active { display: block; animation: fadeIn 0.3s ease; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+  .classifier-var {
+    background: #fff; border: 2px dashed var(--color); border-radius: 14px;
+    padding: 18px 22px; font-size: 18px; font-weight: 800; color: var(--color);
+    margin-bottom: 22px; text-align: center;
+  }
+  .classifier-q {
+    font-size: 20px; font-weight: 800; margin-bottom: 18px; line-height: 1.4;
+  }
+  .classifier-opts { display: grid; gap: 12px; margin-bottom: 12px; }
+  .classifier-btn {
+    background: #fff; border: 2px solid var(--border); border-radius: 12px;
+    padding: 14px 20px; font-size: 16px; font-weight: 700; color: var(--ink);
+    cursor: pointer; text-align: left; font-family: inherit; transition: all 0.15s ease;
+  }
+  .classifier-btn:hover { border-color: var(--color); background: var(--color-soft); }
+  .classifier-result {
+    background: #fff; border-radius: 16px; padding: 26px; text-align: center;
+    border-top: 4px solid var(--result-color, var(--color));
+  }
+  .classifier-result .label-tag {
+    display: inline-block; background: var(--result-color); color: #fff;
+    padding: 6px 16px; border-radius: 999px; font-size: 13px; font-weight: 800;
+    text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 14px;
+  }
+  .classifier-result .label-title {
+    font-size: 28px; font-weight: 900; margin-bottom: 10px;
+  }
+  .classifier-result .label-desc {
+    color: var(--muted); font-weight: 600; margin-bottom: 18px;
+  }
+  .classifier-result .restart {
+    background: var(--color); color: #fff; border: none;
+    padding: 10px 22px; border-radius: 999px;
+    font-size: 14px; font-weight: 800; cursor: pointer; font-family: inherit;
+  }
+  .classifier-pick {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 10px; margin-top: 10px;
+  }
+  .classifier-pick button {
+    background: #fff; border: 2px solid var(--border); border-radius: 12px;
+    padding: 12px 14px; font-size: 14px; font-weight: 700; color: var(--ink);
+    cursor: pointer; font-family: inherit; transition: all 0.15s ease;
+  }
+  .classifier-pick button:hover { border-color: var(--color); background: var(--color-soft); }
+  .classifier-input {
+    width: 100%; padding: 14px 18px; border: 2px solid var(--border);
+    border-radius: 12px; font-size: 16px; font-weight: 700; font-family: inherit;
+    margin-bottom: 12px;
+  }
+  .classifier-input:focus { outline: none; border-color: var(--color); }
+
+  /* ====== DRAG & DROP ====== */
+  .dragdrop { background: var(--gray-bg); border-radius: 22px; padding: 32px; }
+  .dragdrop-pool {
+    background: #fff; border: 2px dashed var(--border); border-radius: 16px;
+    padding: 18px; min-height: 90px; display: flex; flex-wrap: wrap; gap: 10px;
+    margin-bottom: 22px;
+  }
+  .dragdrop-pool.empty::after {
+    content: "✓ ¡Todas clasificadas!";
+    color: var(--muted); font-weight: 800; padding: 14px;
+    width: 100%; text-align: center;
+  }
+  .dragdrop-pool.empty .var-chip { display: none; }
+  .var-chip {
+    background: #fff; border: 2px solid var(--color);
+    color: var(--color); padding: 10px 16px; border-radius: 999px;
+    font-weight: 800; font-size: 14px; cursor: grab; user-select: none;
+    transition: transform 0.15s ease;
+  }
+  .var-chip:active { cursor: grabbing; }
+  .var-chip.dragging { opacity: 0.5; transform: scale(0.95); }
+  .var-chip.correct {
+    background: #10b981; color: #fff; border-color: #10b981;
+  }
+  .var-chip.incorrect {
+    background: #ef4444; color: #fff; border-color: #ef4444;
+    animation: shake 0.4s ease;
+  }
+  @keyframes shake {
+    0%,100% { transform: translateX(0); }
+    25% { transform: translateX(-5px); }
+    75% { transform: translateX(5px); }
+  }
+  .dragdrop-zones {
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px;
+  }
+  .drop-zone {
+    background: #fff; border-radius: 16px; padding: 18px;
+    min-height: 180px; border-top: 5px solid var(--zc); position: relative;
+  }
+  .drop-zone[data-target="nominal"]  { --zc: var(--c-nominal); }
+  .drop-zone[data-target="ordinal"]  { --zc: var(--c-ordinal); }
+  .drop-zone[data-target="intervalo"]{ --zc: var(--c-intervalo); }
+  .drop-zone[data-target="razon"]    { --zc: var(--c-razon); }
+  .drop-zone h4 {
+    font-size: 14px; font-weight: 800; text-transform: uppercase;
+    letter-spacing: 1.2px; color: var(--zc); margin-bottom: 12px;
+  }
+  .drop-zone.over { background: var(--color-soft); box-shadow: 0 0 0 3px var(--color) inset; }
+  .drop-zone-items { display: flex; flex-direction: column; gap: 8px; }
+  .dragdrop-feedback {
+    margin-top: 18px; padding: 14px 18px; border-radius: 12px;
+    background: #fff; font-weight: 700; min-height: 50px;
+    display: flex; align-items: center;
+  }
+  .dragdrop-feedback.ok { background: #ecfdf5; color: #065f46; }
+  .dragdrop-feedback.no { background: #fef2f2; color: #991b1b; }
+
+  /* ====== CASO LIKERT ====== */
+  .case {
+    background: linear-gradient(135deg, #fff5f5 0%, #ffffff 100%);
+    border-radius: 22px; padding: 32px;
+    border-left: 5px solid var(--c-nominal);
+  }
+  .case-step { display: none; }
+  .case-step.active { display: block; animation: fadeIn 0.3s ease; }
+  .case-step h4 {
+    font-size: 22px; font-weight: 800; margin-bottom: 12px; color: var(--ink);
+  }
+  .case-step p { color: var(--ink); font-size: 17px; margin-bottom: 14px; line-height: 1.7; }
+  .case-step .scenario {
+    background: #fff; border-radius: 12px; padding: 18px 22px;
+    border-left: 4px solid var(--c-nominal); margin: 14px 0;
+    font-style: italic; color: var(--ink); font-weight: 600;
+  }
+  .case-options { display: grid; gap: 10px; margin-top: 16px; }
+  .case-option {
+    background: #fff; border: 2px solid var(--border); border-radius: 12px;
+    padding: 14px 18px; cursor: pointer; font-family: inherit;
+    font-size: 16px; font-weight: 700; text-align: left;
+    transition: all 0.15s ease;
+  }
+  .case-option:hover { border-color: var(--c-nominal); }
+  .case-feedback {
+    background: #fff; border-radius: 12px; padding: 16px 20px; margin-top: 16px;
+    border-left: 4px solid var(--c-intervalo); display: none;
+  }
+  .case-feedback.show { display: block; }
+  .case-feedback strong { color: var(--c-intervalo); }
+  .case-next {
+    background: var(--c-nominal); color: #fff; border: none;
+    padding: 12px 24px; border-radius: 999px; font-size: 15px;
+    font-weight: 800; cursor: pointer; font-family: inherit;
+    margin-top: 14px; display: none;
+  }
+  .case-next.show { display: inline-block; }
+
+  /* ====== VÍDEOS Y RECURSOS ====== */
+  .videos-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 16px;
+  }
+  .video-placeholder {
+    background: var(--gray-bg); border-radius: 14px;
+    aspect-ratio: 16 / 9; display: flex; align-items: center; justify-content: center;
+    color: var(--muted); font-weight: 700; border: 2px dashed var(--border);
+    font-size: 14px; text-align: center; padding: 16px;
+  }
+  .links-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+  .link-item {
+    background: var(--gray-bg); border-radius: 14px; padding: 14px 18px;
+    text-decoration: none; color: var(--ink); font-weight: 700;
+    display: flex; align-items: center; gap: 10px;
+    transition: background-color 0.15s ease;
+  }
+  .link-item:hover { background: var(--color-soft); }
+  .link-item .ico { color: var(--color); font-weight: 900; }
+
+  /* ====== PUNTOS Y PREMIO ====== */
+  .reward {
+    background: linear-gradient(135deg, #fff8e1 0%, #fffaf0 100%);
+    border-radius: 22px; padding: 36px;
+    border: 2px solid #f5d96b;
+    position: relative; overflow: hidden;
+    text-align: center;
+  }
+  .reward.unlocked {
+    background: linear-gradient(135deg, #e6faf7 0%, #e0f7fa 100%);
+    border-color: var(--color);
+  }
+  .reward-icon {
+    font-size: 64px; line-height: 1; margin-bottom: 8px; display: inline-block;
+    transition: transform 0.5s ease;
+  }
+  .reward.unlocked .reward-icon {
+    animation: bounceIn 0.6s ease;
+  }
+  @keyframes bounceIn {
+    0% { transform: scale(0); }
+    60% { transform: scale(1.3) rotate(15deg); }
+    100% { transform: scale(1) rotate(0); }
+  }
+  .reward h3 {
+    font-size: 28px; font-weight: 900; margin-bottom: 8px;
+  }
+  .reward p {
+    color: var(--muted); font-weight: 600; margin-bottom: 22px;
+    font-size: 16px;
+  }
+  .reward-progress {
+    max-width: 460px; margin: 0 auto 20px;
+    background: rgba(0,0,0,0.06); border-radius: 999px; overflow: hidden; height: 14px;
+  }
+  .reward-progress-fill {
+    height: 100%; background: linear-gradient(90deg, #fbbf24, #f59e0b);
+    border-radius: 999px; transition: width 0.5s ease;
+  }
+  .reward.unlocked .reward-progress-fill {
+    background: linear-gradient(90deg, var(--color), var(--color-dark));
+  }
+  .reward-points-text {
+    font-weight: 800; color: var(--ink); margin-bottom: 24px; font-size: 17px;
+  }
+  .reward-video-wrap {
+    position: relative; width: 100%; max-width: 720px; margin: 0 auto;
+    aspect-ratio: 16/9; background: #000;
+    border-radius: 16px; overflow: hidden;
+    box-shadow: 0 12px 28px rgba(0,0,0,0.18);
+  }
+  .reward-video-wrap iframe {
+    position: absolute; inset: 0; width: 100%; height: 100%; border: 0;
+  }
+  .reward-locked {
+    position: absolute; inset: 0; background: rgba(0,0,0,0.85);
+    color: #fff; display: flex; flex-direction: column;
+    align-items: center; justify-content: center; gap: 10px;
+    backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+    z-index: 2;
+  }
+  .reward-locked .lock-ico { font-size: 56px; }
+  .reward-locked .lock-text { font-weight: 800; font-size: 16px; }
+  .reward.unlocked .reward-locked { display: none; }
+
+  /* contador flotante */
+  .points-hud {
+    position: fixed; bottom: 22px; right: 22px;
+    background: #fff; border: 2px solid var(--color);
+    border-radius: 999px; padding: 10px 18px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+    display: flex; align-items: center; gap: 12px;
+    z-index: 100; font-weight: 800; font-size: 15px;
+    color: var(--ink);
+    transition: transform 0.2s ease;
+  }
+  .points-hud .star { font-size: 18px; }
+  .points-hud .bar {
+    width: 80px; height: 8px; background: rgba(0,0,0,0.08);
+    border-radius: 999px; overflow: hidden;
+  }
+  .points-hud .bar-fill {
+    height: 100%; background: var(--color);
+    width: 0%; transition: width 0.4s ease;
+  }
+  .points-hud.bump { animation: bump 0.3s ease; }
+  @keyframes bump {
+    0%,100% { transform: scale(1); }
+    50% { transform: scale(1.08); }
+  }
+  .points-hud.complete {
+    background: var(--color); color: #fff;
+    border-color: var(--color);
+  }
+  .points-hud.complete .bar { background: rgba(255,255,255,0.3); }
+  .points-hud.complete .bar-fill { background: #fff; }
+
+  /* Confetti container */
+  .confetti {
+    position: fixed; inset: 0; pointer-events: none; z-index: 999;
+    overflow: hidden;
+  }
+  .confetti span {
+    position: absolute; width: 10px; height: 10px; top: -10px;
+    animation: fall linear forwards;
+  }
+  @keyframes fall {
+    to { transform: translateY(105vh) rotate(720deg); opacity: 0; }
+  }
+
+  /* FOOTER */
+  footer.site {
+    padding: 24px 0; text-align: center; color: var(--muted);
+    font-size: 14px; font-weight: 600; border-top: 1px solid var(--border);
+    margin-top: 40px;
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 720px) {
+    .wrap, .narrow { padding: 0 20px; }
+    .hero-resource h1.title { font-size: 32px; }
+    .hero-resource .lead { font-size: 16px; }
+    .hero-resource .icon-big { font-size: 60px; }
+    .section-head h2 { font-size: 22px; }
+    .dragdrop-zones { grid-template-columns: 1fr 1fr; }
+    .links-grid { grid-template-columns: 1fr; }
+    .opener .question, .classifier-q, .case-step h4 { font-size: 18px; }
+    .brand h1 { font-size: 16px; }
+    .brand img { width: 44px; height: 44px; }
+    nav.top a { font-size: 13px; padding: 8px 12px; }
+  }
+  @media (max-width: 480px) {
+    .dragdrop-zones { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="site">
+  <div class="wrap header-inner">
+    <a href="index.html" class="brand">
+      <img src="logo.svg" alt="Area Loura">
+      <div>
+        <h1>Area Loura — Tech Solutions</h1>
+        <p>Recursos educativos y materiales académicos</p>
+      </div>
+    </a>
+    <nav class="top">
+      <a href="index.html#recursos">Recursos</a>
+      <a href="index.html#acerca">Acerca</a>
+      <a href="index.html#contacto">Contacto</a>
+    </nav>
+  </div>
+</header>
+
+<!-- BREADCRUMB -->
+<div class="wrap">
+  <div class="crumbs">
+    <a href="lab-estadistica.html">&larr; Volver al Laboratorio de Estadística</a>
+  </div>
+</div>
+
+<!-- HERO -->
+<section class="hero-resource">
+  <div class="narrow">
+    <span class="icon-big">📏</span>
+    <span class="hero-pill">Estadística · Unidad I</span>
+    <h1 class="title">Escalas de medida</h1>
+    <p class="lead">Nominal, ordinal, intervalo y razón. La elección de la escala condiciona qué operaciones puedes hacer, qué estadísticos calcular y qué conclusiones extraer.</p>
+  </div>
+</section>
+
+<!-- APERTURA / PROVOCACIÓN -->
+<section class="block">
+  <div class="narrow">
+    <div class="opener">
+      <div class="question">¿Tiene sentido calcular la "satisfacción media" de un cuestionario tipo Likert?</div>
+      <div class="answer-hint">Spoiler: depende de cómo interpretes la escala — y en esta página vas a descubrir por qué importa.</div>
+    </div>
+  </div>
+</section>
+
+<!-- CLASIFICADOR INTERACTIVO -->
+<section class="block">
+  <div class="narrow">
+    <div class="section-head">
+      <div class="badge">🎯</div>
+      <h2>¿Qué escala es esta variable?</h2>
+    </div>
+    <p class="section-intro">Elige una variable o escribe una propia, y responde a las preguntas guía. La página te lleva a la respuesta correcta y te explica por qué.</p>
+
+    <div class="classifier" id="classifier">
+
+      <!-- Paso 0: elegir variable -->
+      <div class="classifier-step active" data-step="0">
+        <div class="classifier-q">Elige una variable para clasificar:</div>
+        <div class="classifier-pick">
+          <button data-var="Edad en años">Edad en años</button>
+          <button data-var="Color de ojos">Color de ojos</button>
+          <button data-var="Puesto en una carrera (1º, 2º, 3º)">Puesto en carrera</button>
+          <button data-var="Temperatura en °C">Temperatura en °C</button>
+          <button data-var="DNI">DNI</button>
+          <button data-var="Nivel de dolor (1 a 10)">Dolor 1–10</button>
+        </div>
+        <div style="margin-top:18px; color: var(--muted); font-weight: 700; font-size: 14px;">o escribe la tuya:</div>
+        <input class="classifier-input" id="cVarInput" placeholder="ej. número de hijos">
+        <button class="classifier-btn" id="cVarSubmit">Empezar →</button>
+      </div>
+
+      <!-- Paso 1 -->
+      <div class="classifier-step" data-step="1">
+        <div class="classifier-var" id="cVar1">…</div>
+        <div class="classifier-q">¿Los valores son categorías sin un orden lógico entre ellas?</div>
+        <div class="classifier-opts">
+          <button class="classifier-btn" data-ans="nominal">Sí — son etiquetas, no se pueden ordenar</button>
+          <button class="classifier-btn" data-ans="next2">No — sí se pueden ordenar de menor a mayor</button>
+        </div>
+      </div>
+
+      <!-- Paso 2 -->
+      <div class="classifier-step" data-step="2">
+        <div class="classifier-var" id="cVar2">…</div>
+        <div class="classifier-q">¿La distancia entre dos valores consecutivos siempre representa la misma magnitud?</div>
+        <div class="classifier-opts">
+          <button class="classifier-btn" data-ans="ordinal">No — solo sé el orden, no la distancia exacta</button>
+          <button class="classifier-btn" data-ans="next3">Sí — las distancias son iguales y medibles</button>
+        </div>
+      </div>
+
+      <!-- Paso 3 -->
+      <div class="classifier-step" data-step="3">
+        <div class="classifier-var" id="cVar3">…</div>
+        <div class="classifier-q">¿Existe un cero absoluto que signifique "ausencia total" de lo que medimos?</div>
+        <div class="classifier-opts">
+          <button class="classifier-btn" data-ans="intervalo">No — el cero es arbitrario (por ejemplo, 0°C no es ausencia de temperatura)</button>
+          <button class="classifier-btn" data-ans="razon">Sí — el cero significa "nada" y los cocientes tienen sentido</button>
+        </div>
+      </div>
+
+      <!-- Resultado -->
+      <div class="classifier-step" data-step="result">
+        <div class="classifier-result" id="cResult">
+          <div class="label-tag">Escala</div>
+          <div class="label-title">—</div>
+          <div class="label-desc">—</div>
+          <button class="restart" id="cRestart">Probar otra variable</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- JUEGO DRAG & DROP -->
+<section class="block">
+  <div class="narrow">
+    <div class="section-head">
+      <div class="badge">🧩</div>
+      <h2>Clasifica las variables</h2>
+    </div>
+    <p class="section-intro">Arrastra cada variable a la columna que le corresponde. Si te equivocas, vuelve a su sitio; si aciertas, se queda fijada y cambia de color.</p>
+
+    <div class="dragdrop" id="dragdrop">
+      <div class="dragdrop-pool" id="ddPool">
+        <div class="var-chip" draggable="true" data-target="nominal">Color de ojos</div>
+        <div class="var-chip" draggable="true" data-target="ordinal">Nivel educativo (primaria, ESO, universitaria)</div>
+        <div class="var-chip" draggable="true" data-target="intervalo">Año de nacimiento</div>
+        <div class="var-chip" draggable="true" data-target="razon">Peso en kg</div>
+        <div class="var-chip" draggable="true" data-target="nominal">Comunidad autónoma</div>
+        <div class="var-chip" draggable="true" data-target="ordinal">Puesto en una carrera</div>
+        <div class="var-chip" draggable="true" data-target="intervalo">Temperatura en °C</div>
+        <div class="var-chip" draggable="true" data-target="razon">Número de hijos</div>
+      </div>
+
+      <div class="dragdrop-zones">
+        <div class="drop-zone" data-target="nominal">
+          <h4>Nominal</h4>
+          <div class="drop-zone-items"></div>
+        </div>
+        <div class="drop-zone" data-target="ordinal">
+          <h4>Ordinal</h4>
+          <div class="drop-zone-items"></div>
+        </div>
+        <div class="drop-zone" data-target="intervalo">
+          <h4>Intervalo</h4>
+          <div class="drop-zone-items"></div>
+        </div>
+        <div class="drop-zone" data-target="razon">
+          <h4>Razón</h4>
+          <div class="drop-zone-items"></div>
+        </div>
+      </div>
+
+      <div class="dragdrop-feedback" id="ddFeedback">Arrastra una variable a una de las cuatro columnas.</div>
+    </div>
+  </div>
+</section>
+
+<!-- CASO LIKERT -->
+<section class="block">
+  <div class="narrow">
+    <div class="section-head">
+      <div class="badge">⚠️</div>
+      <h2>El caso "Likert como intervalo"</h2>
+    </div>
+    <p class="section-intro">Una historia real (anonimizada) sobre cómo una mala asunción sobre la escala llevó a una investigación a conclusiones erróneas. Tú decides cómo procedería.</p>
+
+    <div class="case" id="case">
+
+      <div class="case-step active" data-step="0">
+        <h4>Escenario</h4>
+        <div class="scenario">Una investigadora aplica un cuestionario a 200 estudiantes. Les pide que valoren la afirmación <em>"Las clases me resultan motivadoras"</em> en una escala Likert: 1 = totalmente en desacuerdo … 5 = totalmente de acuerdo. Quiere saber el "nivel medio de motivación" del grupo.</div>
+        <p>¿Cómo procederías para resumir las respuestas?</p>
+        <div class="case-options">
+          <button class="case-option" data-choice="media">Calcular la <strong>media aritmética</strong> de las puntuaciones (suma / N).</button>
+          <button class="case-option" data-choice="mediana">Calcular la <strong>mediana</strong> y/o reportar la distribución de frecuencias.</button>
+          <button class="case-option" data-choice="moda">Reportar solo la <strong>moda</strong>.</button>
+        </div>
+        <div class="case-feedback" id="cf0"></div>
+        <button class="case-next" id="cn0">Continuar →</button>
+      </div>
+
+      <div class="case-step" data-step="1">
+        <h4>El problema oculto</h4>
+        <p>Cuando calculamos la media de 3 y 5, asumimos que la <strong>distancia psicológica</strong> entre "neutral" (3) y "totalmente de acuerdo" (5) es la <strong>misma</strong> que entre 1 y 3. Pero en una Likert, eso no está garantizado: para algunos estudiantes, saltar de 4 a 5 cuesta mucho más que de 3 a 4.</p>
+        <div class="scenario">Si las distancias entre puntos no son iguales, la escala es <strong>ordinal</strong>, no <strong>intervalo</strong>. Y la media solo es interpretable en escalas de intervalo o razón.</div>
+        <p>¿Cómo deberíamos reportar el resultado entonces?</p>
+        <div class="case-options">
+          <button class="case-option" data-choice="dist">Mediana + porcentaje de respuestas por categoría (1 a 5).</button>
+          <button class="case-option" data-choice="ignorar">Ignorar el problema y reportar la media — es lo habitual en muchos artículos.</button>
+        </div>
+        <div class="case-feedback" id="cf1"></div>
+        <button class="case-next" id="cn1">Continuar →</button>
+      </div>
+
+      <div class="case-step" data-step="2">
+        <h4>Conclusión</h4>
+        <p>Tratar una variable ordinal como si fuera de intervalo es uno de los <strong>errores más comunes</strong> en psicología y ciencias sociales. No es siempre catastrófico (de hecho mucha investigación lo asume), pero <strong>saber cuándo es un problema</strong> es lo que distingue a un buen investigador.</p>
+        <p>Regla práctica: si las distancias entre valores no son verificables empíricamente, prefiere estadísticos no paramétricos (mediana, rango intercuartílico, pruebas como Mann–Whitney o Kruskal–Wallis).</p>
+        <button class="case-next show" id="cReset">Reiniciar caso</button>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- RECURSOS ADICIONALES -->
+<section class="block">
+  <div class="narrow">
+    <div class="section-head">
+      <div class="badge">📚</div>
+      <h2>Para profundizar</h2>
+    </div>
+    <div class="links-grid">
+      <a class="link-item" href="#"><span class="ico">→</span> Formulario de la Unidad I (PDF)</a>
+      <a class="link-item" href="#"><span class="ico">→</span> Artículo "Stevens, S.S. (1946) — On the theory of scales of measurement"</a>
+      <a class="link-item" href="#"><span class="ico">→</span> Glosario interactivo (próximamente)</a>
+      <a class="link-item" href="#"><span class="ico">→</span> Mapa conceptual de la unidad (próximamente)</a>
+    </div>
+  </div>
+</section>
+
+<!-- PREMIO -->
+<section class="block" id="rewardSection">
+  <div class="narrow">
+    <div class="section-head">
+      <div class="badge">🏆</div>
+      <h2>Tu premio</h2>
+    </div>
+    <p class="section-intro">Cada actividad que completas correctamente te da puntos. Al llegar a <strong>10</strong> se desbloquea un vídeo sorpresa. Hay tres posibles, así que cada vez que entres puede ser uno distinto.</p>
+
+    <div class="reward" id="reward">
+      <div class="reward-icon" id="rewardIcon">🔒</div>
+      <h3 id="rewardTitle">Premio bloqueado</h3>
+      <p id="rewardSub">Acumula puntos haciendo las actividades de arriba.</p>
+
+      <div class="reward-progress"><div class="reward-progress-fill" id="rewardBar"></div></div>
+      <div class="reward-points-text"><span id="rewardPts">0</span> / 10 puntos</div>
+
+      <div class="reward-video-wrap">
+        <iframe id="rewardVideo" src="" title="Vídeo premio" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        <div class="reward-locked" id="rewardLocked">
+          <div class="lock-ico">🎬</div>
+          <div class="lock-text">Vídeo bloqueado · llega a 10 puntos</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HUD DE PUNTOS FLOTANTE -->
+<div class="points-hud" id="pointsHud" title="Tus puntos">
+  <span class="star">⭐</span>
+  <span><span id="hudPts">0</span> / 10</span>
+  <div class="bar"><div class="bar-fill" id="hudBar"></div></div>
+</div>
+
+<!-- FOOTER -->
+<footer class="site"><div class="wrap">&copy; 2026 Area Loura · arealoura.org</div></footer>
+
+<script>
+// ===========================
+// SISTEMA DE PUNTOS Y PREMIO
+// ===========================
+const GameState = (function() {
+  let points = 0;
+  const MAX = 10;
+  // marcadores para no contar dos veces lo mismo
+  const earned = {
+    classifier: false,           // 2 puntos la primera vez que clasifique una variable
+    drag: new Set(),             // chip que ya dio puntos (1 cada uno)
+    case0: false,                // 2 puntos si elige bien en paso 0
+    case1: false                 // 2 puntos si elige bien en paso 1
+  };
+
+  // 3 posibles vídeos premio (cámbialos por los tuyos)
+  const VIDEOS = [
+    { id: 'dQw4w9WgXcQ', title: 'Premio sorpresa #1' },
+    { id: 'fLexgOxsZu0', title: 'Premio sorpresa #2' },
+    { id: '3GwjfUFyY6M', title: 'Premio sorpresa #3' }
+  ];
+  const chosen = VIDEOS[Math.floor(Math.random() * VIDEOS.length)];
+
+  const hud = document.getElementById('pointsHud');
+  const hudPts = document.getElementById('hudPts');
+  const hudBar = document.getElementById('hudBar');
+  const rewardBar = document.getElementById('rewardBar');
+  const rewardPts = document.getElementById('rewardPts');
+  const reward = document.getElementById('reward');
+  const rewardIcon = document.getElementById('rewardIcon');
+  const rewardTitle = document.getElementById('rewardTitle');
+  const rewardSub = document.getElementById('rewardSub');
+  const rewardVideo = document.getElementById('rewardVideo');
+  const rewardLocked = document.getElementById('rewardLocked');
+
+  function render() {
+    const pct = Math.min(100, (points / MAX) * 100);
+    hudPts.textContent = points;
+    hudBar.style.width = pct + '%';
+    rewardBar.style.width = pct + '%';
+    rewardPts.textContent = points;
+    hud.classList.add('bump');
+    setTimeout(() => hud.classList.remove('bump'), 300);
+
+    if (points >= MAX && !reward.classList.contains('unlocked')) {
+      unlock();
+    }
+  }
+
+  function unlock() {
+    reward.classList.add('unlocked');
+    hud.classList.add('complete');
+    rewardIcon.textContent = '🎉';
+    rewardTitle.textContent = '¡Premio desbloqueado!';
+    rewardSub.textContent = 'Has llegado a 10 puntos. Disfruta tu vídeo sorpresa (cada recarga puede traerte otro distinto).';
+    rewardLocked.style.display = 'none';
+    rewardVideo.src = 'https://www.youtube.com/embed/' + chosen.id + '?rel=0';
+    rewardVideo.title = chosen.title;
+    confetti();
+    // hacer scroll suave al premio
+    setTimeout(() => {
+      document.getElementById('rewardSection').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 400);
+  }
+
+  function confetti() {
+    const colors = ['#06b6a4','#3b82f6','#f59e0b','#ef4444','#a855f7','#facc15'];
+    const wrap = document.createElement('div');
+    wrap.className = 'confetti';
+    document.body.appendChild(wrap);
+    for (let i = 0; i < 80; i++) {
+      const s = document.createElement('span');
+      s.style.left = Math.random() * 100 + 'vw';
+      s.style.background = colors[Math.floor(Math.random() * colors.length)];
+      s.style.animationDuration = (1.8 + Math.random() * 1.4) + 's';
+      s.style.animationDelay = (Math.random() * 0.6) + 's';
+      s.style.borderRadius = Math.random() > 0.5 ? '50%' : '2px';
+      wrap.appendChild(s);
+    }
+    setTimeout(() => wrap.remove(), 4000);
+  }
+
+  return {
+    add(n) {
+      points = Math.min(MAX, points + n);
+      render();
+    },
+    awardClassifier() {
+      if (earned.classifier) return;
+      earned.classifier = true;
+      this.add(2);
+    },
+    awardDrag(chipId) {
+      if (earned.drag.has(chipId)) return;
+      earned.drag.add(chipId);
+      this.add(1);
+    },
+    awardCase(step) {
+      const key = 'case' + step;
+      if (earned[key]) return;
+      earned[key] = true;
+      this.add(2);
+    },
+    get points() { return points; }
+  };
+})();
+
+// ===========================
+// CLASIFICADOR INTERACTIVO
+// ===========================
+(function() {
+  const classifier = document.getElementById('classifier');
+  if (!classifier) return;
+
+  const steps = classifier.querySelectorAll('.classifier-step');
+  const varDisplays = classifier.querySelectorAll('.classifier-var');
+  const resultBox = document.getElementById('cResult');
+  const restart = document.getElementById('cRestart');
+  const pickButtons = classifier.querySelectorAll('.classifier-pick button');
+  const varInput = document.getElementById('cVarInput');
+  const varSubmit = document.getElementById('cVarSubmit');
+
+  let currentVar = '';
+
+  const labels = {
+    nominal:   { title: 'Nominal', color: 'var(--c-nominal)',
+                 desc: 'Etiquetas sin orden. Solo puedes contar frecuencias, calcular la moda y porcentajes. No tiene sentido calcular medias.' },
+    ordinal:   { title: 'Ordinal', color: 'var(--c-ordinal)',
+                 desc: 'Hay un orden, pero la distancia entre valores no es uniforme. Usa mediana, percentiles y rango intercuartílico.' },
+    intervalo: { title: 'Intervalo', color: 'var(--c-intervalo)',
+                 desc: 'Distancias iguales entre valores, pero el cero es arbitrario. Sí puedes calcular medias y desviaciones; cuidado con los cocientes (20°C no es "el doble" que 10°C).' },
+    razon:     { title: 'Razón', color: 'var(--c-razon)',
+                 desc: 'Tiene cero absoluto y distancias iguales. Permite todas las operaciones, incluidos los cocientes (6 kg es el doble que 3 kg).' }
+  };
+
+  function setVar(v) {
+    currentVar = v;
+    varDisplays.forEach(el => el.textContent = v);
+  }
+
+  function showStep(step) {
+    steps.forEach(s => s.classList.remove('active'));
+    const target = classifier.querySelector('[data-step="' + step + '"]');
+    if (target) target.classList.add('active');
+  }
+
+  function showResult(scale) {
+    const data = labels[scale];
+    resultBox.querySelector('.label-tag').textContent = 'Escala ' + data.title;
+    resultBox.querySelector('.label-tag').style.background = data.color;
+    resultBox.querySelector('.label-title').textContent = currentVar + ' → ' + data.title;
+    resultBox.querySelector('.label-title').style.color = data.color;
+    resultBox.querySelector('.label-desc').textContent = data.desc;
+    resultBox.style.setProperty('--result-color', data.color);
+    resultBox.querySelector('.restart').style.background = data.color;
+    showStep('result');
+    GameState.awardClassifier();
+  }
+
+  pickButtons.forEach(b => b.addEventListener('click', () => {
+    setVar(b.dataset.var);
+    showStep('1');
+  }));
+
+  varSubmit.addEventListener('click', () => {
+    const v = varInput.value.trim();
+    if (!v) return;
+    setVar(v);
+    showStep('1');
+  });
+
+  varInput.addEventListener('keydown', e => { if (e.key === 'Enter') varSubmit.click(); });
+
+  classifier.addEventListener('click', e => {
+    const btn = e.target.closest('.classifier-btn[data-ans]');
+    if (!btn) return;
+    const ans = btn.dataset.ans;
+    if (ans === 'nominal' || ans === 'ordinal' || ans === 'intervalo' || ans === 'razon') {
+      showResult(ans);
+    } else if (ans === 'next2') {
+      showStep('2');
+    } else if (ans === 'next3') {
+      showStep('3');
+    }
+  });
+
+  restart.addEventListener('click', () => {
+    varInput.value = '';
+    showStep('0');
+  });
+})();
+
+// ===========================
+// DRAG & DROP
+// ===========================
+(function() {
+  const pool = document.getElementById('ddPool');
+  const zones = document.querySelectorAll('.drop-zone');
+  const feedback = document.getElementById('ddFeedback');
+
+  let dragged = null;
+
+  function checkPool() {
+    if (pool.children.length === 0 || [...pool.children].every(c => c.style.display === 'none')) {
+      pool.classList.add('empty');
+      feedback.textContent = '¡Genial! Has clasificado todas las variables correctamente.';
+      feedback.className = 'dragdrop-feedback ok';
+    }
+  }
+
+  document.querySelectorAll('.var-chip').forEach(chip => {
+    chip.addEventListener('dragstart', e => {
+      dragged = chip;
+      chip.classList.add('dragging');
+      e.dataTransfer.effectAllowed = 'move';
+    });
+    chip.addEventListener('dragend', () => {
+      if (dragged) dragged.classList.remove('dragging');
+      dragged = null;
+    });
+  });
+
+  zones.forEach(z => {
+    z.addEventListener('dragover', e => {
+      e.preventDefault();
+      e.dataTransfer.dropEffect = 'move';
+      z.classList.add('over');
+    });
+    z.addEventListener('dragleave', () => z.classList.remove('over'));
+    z.addEventListener('drop', e => {
+      e.preventDefault();
+      z.classList.remove('over');
+      if (!dragged) return;
+      const correctTarget = dragged.dataset.target;
+      const zoneTarget = z.dataset.target;
+      if (correctTarget === zoneTarget) {
+        // correcto
+        dragged.classList.add('correct');
+        dragged.setAttribute('draggable', 'false');
+        z.querySelector('.drop-zone-items').appendChild(dragged);
+        feedback.textContent = '✓ Correcto: ' + dragged.textContent.trim() + ' es ' + zoneTarget + '. (+1 punto)';
+        feedback.className = 'dragdrop-feedback ok';
+        GameState.awardDrag(dragged.textContent.trim());
+        checkPool();
+      } else {
+        // incorrecto: animar y dejar en el pool
+        dragged.classList.add('incorrect');
+        feedback.textContent = '✗ ' + dragged.textContent.trim() + ' no es ' + zoneTarget + '. Inténtalo otra vez.';
+        feedback.className = 'dragdrop-feedback no';
+        setTimeout(() => {
+          dragged.classList.remove('incorrect');
+          if (!pool.contains(dragged)) pool.appendChild(dragged);
+        }, 600);
+      }
+    });
+  });
+})();
+
+// ===========================
+// CASO LIKERT
+// ===========================
+(function() {
+  const caseEl = document.getElementById('case');
+  if (!caseEl) return;
+  const steps = caseEl.querySelectorAll('.case-step');
+  let current = 0;
+
+  function show(i) {
+    steps.forEach(s => s.classList.remove('active'));
+    const target = caseEl.querySelector('[data-step="' + i + '"]');
+    if (target) target.classList.add('active');
+  }
+
+  // Step 0
+  const opts0 = caseEl.querySelectorAll('.case-step[data-step="0"] .case-option');
+  const fb0 = document.getElementById('cf0');
+  const next0 = document.getElementById('cn0');
+  opts0.forEach(o => o.addEventListener('click', () => {
+    opts0.forEach(x => x.disabled = true);
+    const choice = o.dataset.choice;
+    let txt;
+    if (choice === 'media') {
+      txt = '⚠️ Es lo que muchos hacen, pero estamos asumiendo que las distancias entre 1-2-3-4-5 son iguales. ¿Lo son? Sigue al siguiente paso.';
+    } else if (choice === 'mediana') {
+      txt = '✓ Buena intuición — la mediana y la distribución de frecuencias son válidas para escalas ordinales. Veamos por qué. (+2 puntos)';
+      GameState.awardCase(0);
+    } else {
+      txt = '🤔 La moda informa, pero pierde mucha información. Mira lo que ocurre con la media en el siguiente paso.';
+    }
+    fb0.innerHTML = '<strong>Tu elección:</strong> ' + txt;
+    fb0.classList.add('show');
+    next0.classList.add('show');
+  }));
+  next0.addEventListener('click', () => { current = 1; show(current); });
+
+  // Step 1
+  const opts1 = caseEl.querySelectorAll('.case-step[data-step="1"] .case-option');
+  const fb1 = document.getElementById('cf1');
+  const next1 = document.getElementById('cn1');
+  opts1.forEach(o => o.addEventListener('click', () => {
+    opts1.forEach(x => x.disabled = true);
+    const choice = o.dataset.choice;
+    let txt;
+    if (choice === 'dist') {
+      txt = '✓ Correcto. Reportar la distribución completa preserva la información ordinal sin asumir distancias iguales. (+2 puntos)';
+      GameState.awardCase(1);
+    } else {
+      txt = '⚠️ Es habitual, pero no es lo más correcto. La distribución dice mucho más que un único número que puede esconder bimodalidades o polarización.';
+    }
+    fb1.innerHTML = '<strong>Tu elección:</strong> ' + txt;
+    fb1.classList.add('show');
+    next1.classList.add('show');
+  }));
+  next1.addEventListener('click', () => { current = 2; show(current); });
+
+  document.getElementById('cReset').addEventListener('click', () => {
+    current = 0;
+    show(0);
+    // reset feedbacks/buttons
+    [fb0, fb1].forEach(f => { f.classList.remove('show'); f.innerHTML = ''; });
+    [next0, next1].forEach(n => n.classList.remove('show'));
+    [...opts0, ...opts1].forEach(o => o.disabled = false);
+  });
+})();
+</script>
+
+</body>
+</html>
