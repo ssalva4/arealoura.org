@@ -1,0 +1,702 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Recurso 1 — Area Loura</title>
+<meta name="description" content="Recurso 1 — Area Loura. Materiales académicos interactivos.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --color: #06b6a4;       /* color principal de este recurso */
+    --color-soft: #e6faf7;  /* versión muy clara para fondos suaves */
+    --ink: #1f2937;
+    --muted: #6b7280;
+    --border: #e5e7eb;
+    --gray-bg: #f9fafb;
+  }
+
+  html, body {
+    background-color: #ffffff;
+    color: var(--ink);
+    font-family: 'Nunito', -apple-system, BlinkMacSystemFont, sans-serif;
+    font-size: 16px;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .wrap { max-width: 1200px; margin: 0 auto; padding: 0 32px; }
+  .narrow { max-width: 820px; margin: 0 auto; padding: 0 32px; }
+
+  /* ===== HEADER ===== */
+  header.site {
+    padding: 24px 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .header-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    flex-wrap: wrap;
+  }
+  .brand { display: flex; align-items: center; gap: 14px; text-decoration: none; }
+  .brand img { width: 52px; height: 52px; object-fit: contain; flex-shrink: 0; }
+  .brand h1 { font-size: 19px; font-weight: 800; color: var(--ink); line-height: 1.2; }
+  .brand p { font-size: 14px; color: var(--muted); font-weight: 600; margin-top: 2px; }
+  nav.top { display: flex; gap: 8px; align-items: center; }
+  nav.top a {
+    text-decoration: none;
+    color: var(--ink);
+    font-weight: 700;
+    font-size: 15px;
+    padding: 10px 18px;
+    border-radius: 999px;
+    transition: background-color 0.15s ease;
+  }
+  nav.top a:hover { background: #f3f4f6; }
+
+  /* ===== BREADCRUMB / BACK ===== */
+  .crumbs {
+    padding: 22px 0 0;
+  }
+  .crumbs a {
+    color: var(--muted);
+    font-weight: 700;
+    font-size: 14px;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .crumbs a:hover { color: var(--color); }
+
+  /* ===== HERO DEL RECURSO ===== */
+  .hero-resource {
+    padding: 30px 0 50px;
+  }
+  .hero-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--color);
+    color: #fff;
+    padding: 8px 18px;
+    border-radius: 999px;
+    font-size: 13px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    margin-bottom: 22px;
+  }
+  .hero-resource h1.title {
+    font-size: 48px;
+    font-weight: 900;
+    letter-spacing: -1px;
+    line-height: 1.1;
+    margin-bottom: 18px;
+    color: var(--ink);
+  }
+  .hero-resource .lead {
+    font-size: 19px;
+    color: var(--muted);
+    font-weight: 600;
+    max-width: 720px;
+  }
+  .hero-resource .icon-big {
+    font-size: 90px;
+    line-height: 1;
+    display: inline-block;
+    margin-bottom: 14px;
+    filter: drop-shadow(0 4px 8px rgba(6,182,164,0.18));
+  }
+
+  /* ===== SECCIONES ===== */
+  section.block {
+    padding: 50px 0;
+    border-top: 1px solid var(--border);
+  }
+  section.block:first-of-type { border-top: none; }
+
+  .section-head {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 28px;
+  }
+  .section-head .badge {
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    background: var(--color);
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    flex-shrink: 0;
+  }
+  .section-head h2 {
+    font-size: 26px;
+    font-weight: 800;
+    color: var(--ink);
+    letter-spacing: -0.3px;
+  }
+
+  .prose p {
+    color: var(--ink);
+    margin-bottom: 18px;
+    font-size: 17px;
+    line-height: 1.75;
+  }
+  .prose ul {
+    margin: 14px 0 18px 0;
+    padding-left: 22px;
+  }
+  .prose ul li {
+    margin-bottom: 8px;
+    font-size: 17px;
+  }
+  .prose strong { font-weight: 800; color: var(--ink); }
+
+  /* ===== VIDEO ===== */
+  .video-wrap {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    background: #000;
+    border-radius: 18px;
+    overflow: hidden;
+    box-shadow: 0 12px 24px rgba(0,0,0,0.10);
+  }
+  .video-wrap iframe,
+  .video-wrap video {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+  }
+
+  /* ===== PDF / MATERIAL ===== */
+  .material {
+    background: var(--gray-bg);
+    border: 1.5px solid var(--border);
+    border-radius: 18px;
+    padding: 24px;
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    transition: border-color 0.15s ease, transform 0.15s ease;
+    text-decoration: none;
+    color: inherit;
+  }
+  .material:hover {
+    border-color: var(--color);
+    transform: translateY(-2px);
+  }
+  .material .file-ico {
+    width: 64px;
+    height: 64px;
+    border-radius: 14px;
+    background: var(--color-soft);
+    color: var(--color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 30px;
+    flex-shrink: 0;
+  }
+  .material .meta h3 {
+    font-size: 19px;
+    font-weight: 800;
+    margin-bottom: 4px;
+  }
+  .material .meta p {
+    color: var(--muted);
+    font-weight: 600;
+    font-size: 14px;
+  }
+  .material .arrow {
+    margin-left: auto;
+    font-size: 22px;
+    color: var(--color);
+    font-weight: 900;
+  }
+
+  /* embebido opcional del PDF */
+  .pdf-embed {
+    width: 100%;
+    aspect-ratio: 4 / 5;
+    max-height: 700px;
+    border: 1.5px solid var(--border);
+    border-radius: 18px;
+    margin-top: 18px;
+    background: var(--gray-bg);
+  }
+
+  /* ===== TEST INTERACTIVO ===== */
+  .quiz {
+    background: var(--gray-bg);
+    border-radius: 22px;
+    padding: 32px;
+  }
+  .quiz-progress {
+    height: 8px;
+    background: #e5e7eb;
+    border-radius: 999px;
+    overflow: hidden;
+    margin-bottom: 24px;
+  }
+  .quiz-progress-fill {
+    height: 100%;
+    background: var(--color);
+    width: 0%;
+    transition: width 0.3s ease;
+  }
+  .quiz-question {
+    display: none;
+  }
+  .quiz-question.active {
+    display: block;
+    animation: fadeIn 0.3s ease;
+  }
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .quiz-q-text {
+    font-size: 22px;
+    font-weight: 800;
+    margin-bottom: 8px;
+    line-height: 1.35;
+    color: var(--ink);
+  }
+  .quiz-q-num {
+    color: var(--color);
+    font-weight: 800;
+    font-size: 14px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .quiz-options { display: grid; gap: 12px; margin-top: 22px; }
+  .quiz-option {
+    background: #fff;
+    border: 2px solid var(--border);
+    border-radius: 14px;
+    padding: 16px 20px;
+    font-size: 16px;
+    font-weight: 700;
+    text-align: left;
+    color: var(--ink);
+    cursor: pointer;
+    transition: all 0.15s ease;
+    font-family: inherit;
+  }
+  .quiz-option:hover {
+    border-color: var(--color);
+    background: var(--color-soft);
+  }
+  .quiz-option.correct {
+    background: #ecfdf5;
+    border-color: #10b981;
+    color: #065f46;
+  }
+  .quiz-option.incorrect {
+    background: #fef2f2;
+    border-color: #ef4444;
+    color: #991b1b;
+  }
+  .quiz-feedback {
+    margin-top: 18px;
+    padding: 14px 18px;
+    border-radius: 12px;
+    font-weight: 700;
+    font-size: 15px;
+    display: none;
+  }
+  .quiz-feedback.show { display: block; }
+  .quiz-feedback.ok { background: #ecfdf5; color: #065f46; }
+  .quiz-feedback.no { background: #fef2f2; color: #991b1b; }
+  .quiz-next {
+    margin-top: 22px;
+    background: var(--color);
+    color: #fff;
+    border: none;
+    padding: 14px 28px;
+    border-radius: 999px;
+    font-size: 16px;
+    font-weight: 800;
+    cursor: pointer;
+    font-family: inherit;
+    display: none;
+  }
+  .quiz-next.show { display: inline-block; }
+  .quiz-next:hover { filter: brightness(1.08); }
+
+  .quiz-result {
+    display: none;
+    text-align: center;
+    padding: 12px 0;
+  }
+  .quiz-result.show { display: block; }
+  .quiz-result h3 {
+    font-size: 28px;
+    font-weight: 900;
+    margin-bottom: 8px;
+  }
+  .quiz-result .score {
+    font-size: 48px;
+    font-weight: 900;
+    color: var(--color);
+    margin: 12px 0;
+  }
+  .quiz-result button {
+    background: var(--color);
+    color: #fff;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 999px;
+    font-size: 15px;
+    font-weight: 800;
+    cursor: pointer;
+    font-family: inherit;
+    margin-top: 12px;
+  }
+
+  /* ===== RECURSOS ADICIONALES ===== */
+  .links-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 14px;
+  }
+  .link-item {
+    background: var(--gray-bg);
+    border-radius: 14px;
+    padding: 16px 20px;
+    text-decoration: none;
+    color: var(--ink);
+    font-weight: 700;
+    transition: background-color 0.15s ease;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .link-item:hover { background: var(--color-soft); }
+  .link-item .ico { color: var(--color); font-size: 18px; }
+
+  /* ===== FOOTER ===== */
+  footer.site {
+    padding: 24px 0;
+    text-align: center;
+    color: var(--muted);
+    font-size: 14px;
+    font-weight: 600;
+    border-top: 1px solid var(--border);
+    margin-top: 40px;
+  }
+
+  /* ===== RESPONSIVE ===== */
+  @media (max-width: 700px) {
+    .wrap, .narrow { padding: 0 20px; }
+    .hero-resource h1.title { font-size: 32px; }
+    .hero-resource .lead { font-size: 16px; }
+    .hero-resource .icon-big { font-size: 64px; }
+    .section-head h2 { font-size: 22px; }
+    .links-grid { grid-template-columns: 1fr; }
+    .material { flex-direction: column; text-align: center; }
+    .material .arrow { display: none; }
+    .quiz { padding: 22px; }
+    .quiz-q-text { font-size: 18px; }
+    .brand h1 { font-size: 16px; }
+    .brand p { font-size: 13px; }
+    .brand img { width: 44px; height: 44px; }
+    nav.top a { font-size: 13px; padding: 8px 12px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="site">
+  <div class="wrap header-inner">
+    <a href="index.html" class="brand">
+      <img src="logo.svg" alt="Area Loura">
+      <div>
+        <h1>Area Loura — Tech Solutions</h1>
+        <p>Recursos educativos y materiales académicos</p>
+      </div>
+    </a>
+    <nav class="top">
+      <a href="index.html#recursos">Recursos</a>
+      <a href="index.html#acerca">Acerca</a>
+      <a href="index.html#contacto">Contacto</a>
+    </nav>
+  </div>
+</header>
+
+<!-- BREADCRUMB -->
+<div class="wrap">
+  <div class="crumbs">
+    <a href="index.html">&larr; Volver a recursos</a>
+  </div>
+</div>
+
+<!-- HERO DEL RECURSO -->
+<section class="hero-resource">
+  <div class="narrow">
+    <span class="icon-big">🧠</span>
+    <span class="hero-pill">Categoría · Recurso 1</span>
+    <h1 class="title">Título del recurso</h1>
+    <p class="lead">Breve descripción del recurso: en una o dos frases, explica qué va a aprender o practicar el estudiante con este contenido.</p>
+  </div>
+</section>
+
+<!-- DESCRIPCIÓN / TEXTO -->
+<section class="block">
+  <div class="narrow">
+    <div class="section-head">
+      <div class="badge">📄</div>
+      <h2>Descripción</h2>
+    </div>
+    <div class="prose">
+      <p>Aquí va el texto introductorio del recurso. Puedes desarrollar los <strong>conceptos clave</strong>, ofrecer contexto teórico, y orientar al estudiante sobre cómo aprovechar mejor el material.</p>
+      <p>El bloque acepta varios párrafos, listas, negritas, enlaces y cualquier elemento de prosa que necesites.</p>
+      <ul>
+        <li>Punto importante uno.</li>
+        <li>Punto importante dos.</li>
+        <li>Punto importante tres.</li>
+      </ul>
+      <p>Cuando el alumno termine este bloque debe tener clara la idea general antes de pasar al vídeo o al material.</p>
+    </div>
+  </div>
+</section>
+
+<!-- VIDEO -->
+<section class="block">
+  <div class="narrow">
+    <div class="section-head">
+      <div class="badge">🎬</div>
+      <h2>Vídeo</h2>
+    </div>
+    <div class="video-wrap">
+      <!-- Sustituir el src por la URL real (YouTube, Vimeo, etc.) -->
+      <iframe
+        src="https://www.youtube.com/embed/dQw4w9WgXcQ"
+        title="Vídeo del recurso"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        allowfullscreen></iframe>
+    </div>
+  </div>
+</section>
+
+<!-- PDF / MATERIAL DESCARGABLE -->
+<section class="block">
+  <div class="narrow">
+    <div class="section-head">
+      <div class="badge">📚</div>
+      <h2>Material</h2>
+    </div>
+    <a class="material" href="material.pdf" download>
+      <div class="file-ico">📄</div>
+      <div class="meta">
+        <h3>Apuntes del recurso (PDF)</h3>
+        <p>Documento de apoyo · 12 páginas · 1,2 MB</p>
+      </div>
+      <span class="arrow">↓</span>
+    </a>
+
+    <!-- Visor PDF embebido opcional. Si no lo quieres, borra esta línea: -->
+    <iframe class="pdf-embed" src="material.pdf" title="Vista previa del PDF"></iframe>
+  </div>
+</section>
+
+<!-- TEST INTERACTIVO -->
+<section class="block">
+  <div class="narrow">
+    <div class="section-head">
+      <div class="badge">🎯</div>
+      <h2>Test interactivo</h2>
+    </div>
+    <div class="quiz" id="quiz">
+      <div class="quiz-progress"><div class="quiz-progress-fill" id="qbar"></div></div>
+
+      <div class="quiz-question active" data-q="0">
+        <div class="quiz-q-num">Pregunta 1 de 3</div>
+        <div class="quiz-q-text">¿Cuál de las siguientes afirmaciones describe mejor el pensamiento divergente?</div>
+        <div class="quiz-options">
+          <button class="quiz-option" data-correct="false">Buscar la única respuesta correcta a un problema.</button>
+          <button class="quiz-option" data-correct="true">Generar múltiples soluciones o ideas para un mismo problema.</button>
+          <button class="quiz-option" data-correct="false">Memorizar información para aplicarla literalmente.</button>
+          <button class="quiz-option" data-correct="false">Seguir un procedimiento fijo paso a paso.</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+
+      <div class="quiz-question" data-q="1">
+        <div class="quiz-q-num">Pregunta 2 de 3</div>
+        <div class="quiz-q-text">¿Qué heurística describe el atajo de juzgar por la similitud con un prototipo mental?</div>
+        <div class="quiz-options">
+          <button class="quiz-option" data-correct="false">Disponibilidad</button>
+          <button class="quiz-option" data-correct="true">Representatividad</button>
+          <button class="quiz-option" data-correct="false">Anclaje y ajuste</button>
+          <button class="quiz-option" data-correct="false">Simulación</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+
+      <div class="quiz-question" data-q="2">
+        <div class="quiz-q-num">Pregunta 3 de 3</div>
+        <div class="quiz-q-text">El sesgo de confirmación consiste en…</div>
+        <div class="quiz-options">
+          <button class="quiz-option" data-correct="true">Buscar e interpretar información de modo que confirme lo que ya creemos.</button>
+          <button class="quiz-option" data-correct="false">Olvidar selectivamente datos que apoyan nuestras hipótesis.</button>
+          <button class="quiz-option" data-correct="false">Asumir que el azar es predecible a corto plazo.</button>
+          <button class="quiz-option" data-correct="false">Aceptar conclusiones sin evidencia, por agotamiento.</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+
+      <button class="quiz-next" id="qnext">Siguiente →</button>
+
+      <div class="quiz-result" id="qresult">
+        <h3>¡Test completado!</h3>
+        <p>Tu puntuación:</p>
+        <div class="score"><span id="qscore">0</span>/3</div>
+        <p id="qmsg" style="font-weight:700; color: var(--muted);"></p>
+        <button id="qretry">Repetir test</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- RECURSOS ADICIONALES -->
+<section class="block">
+  <div class="narrow">
+    <div class="section-head">
+      <div class="badge">🔗</div>
+      <h2>Recursos adicionales</h2>
+    </div>
+    <div class="links-grid">
+      <a class="link-item" href="#"><span class="ico">→</span> Lectura complementaria 1</a>
+      <a class="link-item" href="#"><span class="ico">→</span> Lectura complementaria 2</a>
+      <a class="link-item" href="#"><span class="ico">→</span> Vídeo de profundización</a>
+      <a class="link-item" href="#"><span class="ico">→</span> Ejercicios prácticos</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="site">
+  <div class="wrap">&copy; 2026 Area Loura · arealoura.org</div>
+</footer>
+
+<script>
+  // ===== LÓGICA DEL TEST =====
+  (function() {
+    const quiz = document.getElementById('quiz');
+    if (!quiz) return;
+
+    const questions = quiz.querySelectorAll('.quiz-question');
+    const next = document.getElementById('qnext');
+    const bar  = document.getElementById('qbar');
+    const result = document.getElementById('qresult');
+    const scoreEl = document.getElementById('qscore');
+    const msgEl   = document.getElementById('qmsg');
+    const retryBtn = document.getElementById('qretry');
+
+    let current = 0;
+    let score = 0;
+    let answered = false;
+
+    function updateBar() {
+      const pct = ((current) / questions.length) * 100;
+      bar.style.width = pct + '%';
+    }
+
+    function showQuestion(i) {
+      questions.forEach(q => q.classList.remove('active'));
+      const q = quiz.querySelector('.quiz-question[data-q="' + i + '"]');
+      if (q) q.classList.add('active');
+      next.classList.remove('show');
+      answered = false;
+      updateBar();
+    }
+
+    function showResult() {
+      questions.forEach(q => q.classList.remove('active'));
+      next.classList.remove('show');
+      bar.style.width = '100%';
+      result.classList.add('show');
+      scoreEl.textContent = score;
+      if (score === questions.length) msgEl.textContent = '¡Perfecto! Has acertado todas.';
+      else if (score >= questions.length / 2) msgEl.textContent = '¡Buen trabajo! Repasa lo que aún se te resista.';
+      else msgEl.textContent = 'Sigue practicando — vuelve a revisar el material.';
+    }
+
+    quiz.addEventListener('click', function(e) {
+      const btn = e.target.closest('.quiz-option');
+      if (!btn || answered) return;
+
+      const q = btn.closest('.quiz-question');
+      const correct = btn.dataset.correct === 'true';
+      const feedback = q.querySelector('.quiz-feedback');
+
+      // Deshabilita todos los botones de esa pregunta y marca correctos
+      q.querySelectorAll('.quiz-option').forEach(o => {
+        if (o.dataset.correct === 'true') o.classList.add('correct');
+        else if (o === btn) o.classList.add('incorrect');
+        o.disabled = true;
+      });
+
+      if (correct) {
+        score++;
+        feedback.textContent = '✓ Correcto.';
+        feedback.className = 'quiz-feedback ok show';
+      } else {
+        feedback.textContent = '✗ Incorrecto. La opción correcta aparece resaltada.';
+        feedback.className = 'quiz-feedback no show';
+      }
+
+      answered = true;
+      next.classList.add('show');
+      next.textContent = (current === questions.length - 1) ? 'Ver resultado' : 'Siguiente →';
+    });
+
+    next.addEventListener('click', function() {
+      current++;
+      if (current >= questions.length) {
+        showResult();
+      } else {
+        showQuestion(current);
+      }
+    });
+
+    retryBtn.addEventListener('click', function() {
+      // reset
+      current = 0;
+      score = 0;
+      answered = false;
+      result.classList.remove('show');
+      quiz.querySelectorAll('.quiz-option').forEach(o => {
+        o.classList.remove('correct','incorrect');
+        o.disabled = false;
+      });
+      quiz.querySelectorAll('.quiz-feedback').forEach(f => {
+        f.className = 'quiz-feedback';
+        f.textContent = '';
+      });
+      showQuestion(0);
+    });
+
+    updateBar();
+  })();
+</script>
+
+</body>
+</html>

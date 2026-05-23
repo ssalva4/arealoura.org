@@ -1,0 +1,27 @@
+<svg width="240" height="240" viewBox="0 0 240 240" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <clipPath id="clipCircle1">
+      <circle cx="120" cy="120" r="108"/>
+    </clipPath>
+  </defs>
+
+  <!-- fondo del círculo (cielo / arena clara) -->
+  <circle cx="120" cy="120" r="108" fill="#fff3d6"/>
+
+  <!-- sol -->
+  <circle cx="120" cy="92" r="26" fill="#f59e0b"/>
+  <circle cx="120" cy="92" r="34" fill="none" stroke="#f59e0b" stroke-width="2" opacity="0.35"/>
+
+  <!-- olas (recortadas al círculo) -->
+  <g clip-path="url(#clipCircle1)">
+    <path d="M -10 142 Q 25 132, 55 142 T 115 142 T 175 142 T 250 142"
+          fill="none" stroke="#0891b2" stroke-width="7" stroke-linecap="round"/>
+    <path d="M -10 167 Q 25 157, 55 167 T 115 167 T 175 167 T 250 167"
+          fill="none" stroke="#0e7490" stroke-width="7" stroke-linecap="round"/>
+    <path d="M -10 192 Q 25 182, 55 192 T 115 192 T 175 192 T 250 192"
+          fill="none" stroke="#155e75" stroke-width="7" stroke-linecap="round"/>
+  </g>
+
+  <!-- aro exterior -->
+  <circle cx="120" cy="120" r="108" fill="none" stroke="#0c3a5c" stroke-width="5"/>
+</svg>
